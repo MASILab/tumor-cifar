@@ -1,11 +1,15 @@
 # tumor-cifar
 
-This is the supplementary material for the paper of MICCAIW-MLMI 2019: 
+This is the supplementary material for the oral-presentation paper of MICCAIW-MLMI 2019: 
 
 "Distanced LSTM: Time-Distanced Gates in LSTM to adapt Longitudinal Lung Cancer Detection". 
+
+And we are extending the journal version of this work (DLSTM).  
  
 
 ---------------------------------------------------------------------------------------------
+
+## Functions
 
 In the python code script we have 4 functions:
 
@@ -26,6 +30,16 @@ Generating the image according to meta information from csv file.
 This function is called by get_nodule_img, which transfer the nodule information to image and add noise.
 
 
+
 --------------------------------------
 
+## Usage
+
 There is a example to show how to use the data in demo_submit.ipynb
+
+
+--------------------------------------
+
+## Document
+
+The file TumorCIFAR_materials.pdf describes why and how we create the Tumor-CIFAR. Please email Riqiang Gao (riqiang.gao@vanderbilt.edu) if you have further concerns.
