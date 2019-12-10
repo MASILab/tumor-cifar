@@ -4,7 +4,10 @@ This is the supplementary material for the oral-presentation paper of MICCAIW-ML
 
 "Distanced LSTM: Time-Distanced Gates in LSTM to adapt Longitudinal Lung Cancer Detection". 
 
-And we are extending the journal version of this work (DLSTM).  
+We are extending the journal version of this work (DLSTM). The DLSTM code will be available soon. 
+
+<img src="https://github.com/MASILab/tumor-cifar/blob/master/illustration.png" width="600">
+
  
 
 ---------------------------------------------------------------------------------------------
@@ -15,7 +18,7 @@ In the python code script we have 4 functions:
 
 1. get_csv_v1:
 
-This function generate the meta information for tumor-CIFAR-v1 and save it in a csv file. The meta information includes: image name, image time point, nodule position, ground truth (cancer or non-cancer) and nodule size
+This function generate the meta information for tumor-CIFAR-v1 and save it in a csv file. The meta information includes: image name, image time point, nodule position, ground truth (cancer or non-cancer) and nodule size.
 
 2. get_csv_v2:
 
@@ -35,8 +38,7 @@ This function is called by get_nodule_img, which transfer the nodule information
 
 ## Usage
 
-There is a example to show how to use the data in demo_submit.ipynb
-
+There is an example showing how to use the data in demo_submit.ipynb.
 
 --------------------------------------
 
