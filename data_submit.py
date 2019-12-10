@@ -122,7 +122,24 @@ def get_nodule_img(data_root, csv_path, save_root, sp_prob):
         io.imsave(save_root + '/T2/' + item['img'], imgs[2])
         io.imsave(save_root + '/T3/' + item['img'], imgs[3])
         io.imsave(save_root + '/T4/' + item['img'], imgs[4])
-  
+ 
+def sp_noise(image,prob):
+    '''
+    Add salt and pepper noise to image
+    prob: Probability of the noise
+    '''
+    output = np.zeros(image.shape,np.uint8)
+    thres = 1 - prob 
+    for i in range(image.shape[0]):
+        for j in range(image.shape[1]):
+            rdn = random.random()
+            if rdn < prob:
+                output[i][j] = [20,20,20]
+            elif rdn > thres:
+                output[i][j] = [220, 220, 220]
+            else:
+                output[i][j] = image[i][j]
+    return output
 
 def add_nodule(im_path, nodules, rs, sp_prob):  
     imgs = np.zeros((5, 32, 32, 3), dtype = np.uint8)
