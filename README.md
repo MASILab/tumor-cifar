@@ -1,10 +1,14 @@
-# tumor-cifar
+# Tumor-CIFAR
 
 This is the supplementary material for the oral-presentation paper of MICCAIW-MLMI 2019: 
 
 "Distanced LSTM: Time-Distanced Gates in LSTM to adapt Longitudinal Lung Cancer Detection". 
 
-We are extending the journal version of this work (DLSTM). The DLSTM code will be available soon. 
+and Journal Version: 
+
+"Time-Distanced Gates in Long Short Term Memory Networks".
+
+ The DLSTM code will be available soon. 
 
 <img src="https://github.com/MASILab/tumor-cifar/blob/master/illustration.png" width="600">
 
