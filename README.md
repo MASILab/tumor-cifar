@@ -8,7 +8,6 @@ and Journal Version:
 
 "Time-Distanced Gates in Long Short Term Memory Networks".
 
- The DLSTM code will be available soon. 
 
 <img src="https://github.com/MASILab/tumor-cifar/blob/master/illustration.png" width="600">
 
