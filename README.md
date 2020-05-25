@@ -48,4 +48,4 @@ There is an example showing how to use the data in demo_submit.ipynb.
 
 ## Document
 
-The file TumorCIFAR_materials.pdf describes why and how we create the Tumor-CIFAR. Please email Riqiang Gao (riqiang.gao@vanderbilt.edu) if you have further concerns.
+The file supplementary_materials.pdf describes why and how we create the Tumor-CIFAR and supplementary materials for paper. Please email Riqiang Gao (riqiang.gao@vanderbilt.edu) if you have further concerns.
