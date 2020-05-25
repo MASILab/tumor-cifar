@@ -5,6 +5,12 @@ import re
 import os
 import random
 
+def get_csv_list(str_list):
+    l = re.split('[][, ]', str_list)
+    try:
+        return [int(i) for i in l if len(i) != 0]
+    except:
+        return [float(i) for i in l if len(i) != 0]
 
 def get_csv_v2(data_root, save_path):
     '''
@@ -147,6 +153,13 @@ def add_nodule(im_path, nodules, rs, sp_prob):
     for t in range(5):
         img = io.imread(im_path)
         
+        # ---- if add possion noise -------# 
+#         noisy = np.random.poisson(img.astype(float)).astype(float)
+#         noisy = 10 * ((noisy - np.min(noisy)) / (np.max(noisy) - np.min(noisy)))
+#         noisy = noisy.astype('uint8')
+#         img = img + noisy
+        # ---------------------------------#
+        
         for i in range(nodules[0] - 5, nodules[0]+ 6):
             for j in range(nodules[1] - 5, nodules[1]+6):
                 if (i - nodules[0]) * (i - nodules[0]) + (j - nodules[1]) * (j - nodules[1]) < 0.3 * rs[t]:
@@ -157,6 +170,8 @@ def add_nodule(im_path, nodules, rs, sp_prob):
                 if (i - nodules[2]) * (i - nodules[2]) + (j - nodules[3]) * (j - nodules[3]) < 0.3 * rs[t]:
                     img[i, j, :] = np.minimum(250, (1 + 0.1 * rs[t]) * img[i, j, :])
         
+        # --- if add salt and pepper noise #
         img = sp_noise(img,sp_prob)
+        
         imgs[t] = img
     return imgs  
