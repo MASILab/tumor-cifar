@@ -33,7 +33,7 @@ Generating the image according to meta information from csv file.
 
 This function is called by get_nodule_img, which transfer the nodule information to image and add noise.
 
-<img src="https://github.com/MASILab/tumor-cifar/blob/master/figure.png" width="600">
+<img src="https://github.com/MASILab/tumor-cifar/blob/master/Figure.png" width="600">
 
 --------------------------------------
 
