@@ -153,13 +153,6 @@ def add_nodule(im_path, nodules, rs, sp_prob):
     for t in range(5):
         img = io.imread(im_path)
         
-        # ---- if add possion noise -------# 
-#         noisy = np.random.poisson(img.astype(float)).astype(float)
-#         noisy = 10 * ((noisy - np.min(noisy)) / (np.max(noisy) - np.min(noisy)))
-#         noisy = noisy.astype('uint8')
-#         img = img + noisy
-        # ---------------------------------#
-        
         for i in range(nodules[0] - 5, nodules[0]+ 6):
             for j in range(nodules[1] - 5, nodules[1]+6):
                 if (i - nodules[0]) * (i - nodules[0]) + (j - nodules[1]) * (j - nodules[1]) < 0.3 * rs[t]:
