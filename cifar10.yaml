@@ -1,0 +1,31 @@
+#root file
+data_root: "tumor-cifar-v1" # note the dataset in this respository is not complete since the set size is large, but you can generate with the provide code.
+save_path: 'path/to/save/folder'
+tt_csv_path: 'tumor-cifar-v1/test.csv' # just a example
+tr_csv_path: 'tumor-cifar-v1/train.csv' # just a example
+
+# training Params
+max_epoch: 100
+start_epoch: 0
+n_classes: 2
+learning_rate: 0.01
+batch_size: 64
+
+begin_time: 0
+time: 5
+# valid_size: 0.1
+adjust_lr: True
+
+steps: [50, 70, 80]
+lr_gamma: 0.4
+
+use_exist_model: False
+save_tensorlog: True
+iseval: True
+add_positive: True
+savemodel: True
+model_name: rnn # [bl, rnn, disrnn]
+mode: infor_exp   #
+
+# loss Params
+loss_name: cross_entropy_loss
