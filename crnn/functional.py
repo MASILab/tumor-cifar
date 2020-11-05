@@ -54,6 +54,8 @@ def LSTMCell(input, hidden, w_ih, w_hh, b_ih=None, b_hh=None, linear_func=None):
     return hy, cy
 
 def LSTMdisCell(input, time_dis, hidden, a, b, c, w_ih, w_hh, b_ih = None, b_hh = None, linear_func = None, mode = 'dis_exp'):
+    a = torch.max(torch.as_tensor(0.1), a)
+    c = torch.max(torch.as_tensor(0.0), c)
     #print (input.shape, time_dis.shape)
     if linear_func is None:
         linear_func = F.linear
