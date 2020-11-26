@@ -1,15 +1,11 @@
 #root file
 
-data_root: "/media/gaor2/8e7f6ccf-3585-4815-856e-80ce8754c5b5/data/tumor_cifar/dataV3/v1"
-save_path: '/media/gaor2/8e7f6ccf-3585-4815-856e-80ce8754c5b5/saved_file/tumorcifar/V3/v1/test'
-tt_csv_path: '/media/gaor2/8e7f6ccf-3585-4815-856e-80ce8754c5b5/data/tumor_cifar/dataV3/v1/test.csv'
-tr_csv_path: '/media/gaor2/8e7f6ccf-3585-4815-856e-80ce8754c5b5/data/tumor_cifar/dataV3/v1/train.csv'
 
 
-# data_root: "tumor-cifar-v1" # note the dataset in this respository is not complete since the set size is large, but you can generate with the provide code.
-# save_path: 'path/to/save/folder'
-# tt_csv_path: 'tumor-cifar-v1/test.csv' # just a example
-# tr_csv_path: 'tumor-cifar-v1/train.csv' # just a example
+data_root: "tumor-cifar-v1" # note the dataset in this respository is not complete since the set size is large, but you can generate with the provide code.
+save_path: 'path/to/save/folder'
+tt_csv_path: 'tumor-cifar-v1/test.csv' # just a example
+tr_csv_path: 'tumor-cifar-v1/train.csv' # just a example
 
 # training Params
 max_epoch: 100

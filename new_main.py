@@ -116,100 +116,7 @@ class ConvDisRNN(nn.Module):
         x = F.dropout(x, training=self.training)
         x = self.fc2(x)
         return F.log_softmax(x, dim=1)  
-    
-class ConvTRNN(nn.Module): 
-    def __init__(self, in_channels, out_channels, kernel_size, num_classes, time_len):
-        super(ConvTRNN, self).__init__()
-        #self.in_channels = in_channels
-        #self.out_channels = out_channels
-        #self.lstmcell = crnn.Conv2dLSTMCell(in_channels, out_channels, kernel_size)
-        self.dislstmcell = crnn.TLSTMCell('TLSTMv2', in_channels, out_channels, kernel_size, convndim = 2)
-        #self.lstmcell = crnn.Conv2dLSTMCell(in_channels, out_channels, kernel_size)
-        self.time_len = time_len
-        self.conv1 = nn.Conv2d(out_channels, 10, kernel_size=5)
-        self.conv2 = nn.Conv2d(10, 20, kernel_size=5)  # # 2D convolutional layer
-        self.conv2_drop = nn.Dropout2d()           # Dropout layer
-        self.fc1 = nn.Linear(500, 40)             # fully connected layer
-        self.fc2 = nn.Linear(40, num_classes)  
-        
-    def forward(self, x, time_dis):
-        #print ('In network', x.shape)
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        #time_dis = torch.tensor(cfig['time_dis'])
-        #print (time_dis)
-        #print ('---------------', time_dis.shape)
-        for i in range(self.time_len):
-            
-            if i == 0:
-                hx, cx = self.dislstmcell(x[i], [time_dis[:,0], time_dis[:, 0]])
-            else:
-                hx, cx = self.dislstmcell(x[i], [time_dis[:,i-1], time_dis[:,i]], (hx, cx))  # actually it's not very reasonable here, since the input gate and the forgate gate should have a different number.
-                
-        x = F.relu(F.max_pool2d(self.conv1(hx), 2))
-        x = F.relu(F.max_pool2d(self.conv2_drop(self.conv2(x)), 2))
-        #print ('In network', x.shape)
-        x = x.view(-1, 500)
-        #print ('In network', x.shape)
-        x = F.relu(self.fc1(x))
-        x = F.dropout(x, training=self.training)
-        x = self.fc2(x)
-        return F.log_softmax(x, dim=1)  
-    
-class DenseDisRNN(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size, num_classes, time):
-        super(DenseDisRNN, self).__init__()
-        #self.in_channels = in_channels
-        #self.out_channels = out_channels
-        self.lstmcell = crnn.Conv2dLSTMCell(out_channels, out_channels, kernel_size)
-        self.dislstmcell = crnn.LSTMdistCell(cfig['mode'], in_channels, out_channels, kernel_size, convndim = 2)
-        #self.lstmcell = crnn.Conv2dLSTMCell(in_channels, out_channels, kernel_size)
-        self.time = time
-        self.conv1 = nn.Conv2d(2* out_channels, 10, kernel_size=5)
-        self.conv2 = nn.Conv2d(10, 20, kernel_size=5)  # # 2D convolutional layer
-        self.conv2_drop = nn.Dropout2d()           # Dropout layer
-        self.fc1 = nn.Linear(500, 10)             # fully connected layer
-        self.fc2 = nn.Linear(10, num_classes)  
-        
-    def forward(self, x):
-        
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        time_dis = torch.tensor([0.8,0.3,0.]).cuda()  # [0.8, 0.5, 0]
-        for i in range(self.time):
-            if i == 0:
-                hx1, cx1 = self.dislstmcell(x[i], time_dis[i])
-            else:
-                hx1, cx1 = self.dislstmcell(x[i], time_dis[i], (hx1, cx1))
-                
-        for i in range(1, self.time):      # Dense Connected, haven't tested 0207
-            if i == 1:
-                hx2, cx2 = self.dislstmcell(x[i], time_dis[i])
-            else:
-                hx2, cx2 = self.dislstmcell(x[i], time_dis[i], (hx2, cx2))
-                
-        for i in range(0, 3, 2):
-            if i == 0:
-                hx3, cx3 = self.dislstmcell(x[i], time_dis[i])
-            else:
-                hx3, cx3 = self.dislstmcell(x[i], time_dis[i], (hx3, cx3))
-                
-#         hx, cx = self.lstmcell(hx3)
-#         hx, cx = self.lstmcell(hx2, (hx, cx))
-#         hx, cx = self.lstmcell(hx1, (hx, cx))
-            
-        hx = torch.cat([hx1, hx3], 1)
-        
-        #x = (hx1 + hx2) / 2.0
-        
-        x = F.relu(F.max_pool2d(self.conv1(hx), 2))
-        x = F.relu(F.max_pool2d(self.conv2_drop(self.conv2(x)), 2))
-        #print ('In network', x.shape)
-        x = x.view(-1, 500)
-        #print ('In network', x.shape)
-        x = F.relu(self.fc1(x))
-        x = F.dropout(x, training=self.training)
-        x = self.fc2(x)
-        return F.log_softmax(x, dim=1)     
-        
+
 
 class Trainer(object):
 
@@ -385,14 +292,7 @@ class Trainer(object):
             pred_list += pred_cls.data.cpu().numpy().tolist()
             target_list += target.data.cpu().numpy().tolist()
             loss_list.append(loss.data.cpu().numpy().tolist())
-        try: 
-            print (1000 * self.model.dislstmcell.a.grad, ' a grad')
-            
-            print (self.model.dislstmcell.a.data, self.model.dislstmcell.c.data)
-            print (1000 * self.model.dislstmcell.c.grad, 'c grad')
-            #print (self.model.dislstmcell.weight_ih.grad.max(), 'weight_ih')
-        except:
-            print ('a.grad none')    
+
         print (confusion_matrix(target_list, pred_list))
         accuracy=accuracy_score(target_list,pred_list)
         fpr, tpr, threshold = metrics.roc_curve(target_list, pos_list)
