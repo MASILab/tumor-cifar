@@ -41,7 +41,7 @@ def LSTMCell(input, hidden, w_ih, w_hh, b_ih=None, b_hh=None, linear_func=None):
 
     hx, cx = hidden
     gates = linear_func(input, w_ih, b_ih) + linear_func(hx, w_hh, b_hh)
-    ingate, forgetgate, cellgate, outgate = gates.chunk(4, 1)             # not very understand 2018/07/08
+    ingate, forgetgate, cellgate, outgate = gates.chunk(4, 1)        
 
     ingate = F.sigmoid(ingate)
     forgetgate = F.sigmoid(forgetgate)
@@ -54,8 +54,9 @@ def LSTMCell(input, hidden, w_ih, w_hh, b_ih=None, b_hh=None, linear_func=None):
     return hy, cy
 
 def LSTMdisCell(input, time_dis, hidden, a, b, c, w_ih, w_hh, b_ih = None, b_hh = None, linear_func = None, mode = 'dis_exp'):
-    a = torch.max(torch.as_tensor(0.1), a)
-    c = torch.max(torch.as_tensor(0.0), c)
+    #a = torch.max(torch.as_tensor(0.1).cuda(), a)
+    #c = torch.max(torch.as_tensor(0.0).cuda(), c)
+    
     #print (input.shape, time_dis.shape)
     if linear_func is None:
         linear_func = F.linear
